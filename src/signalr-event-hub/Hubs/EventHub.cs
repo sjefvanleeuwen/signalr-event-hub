@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace signalr_event_hub.Hubs
 {
-     [EnableCors("MyPolicy")]
     public class EventHub : Hub
     {
         public async Task Subscribe(string topic)

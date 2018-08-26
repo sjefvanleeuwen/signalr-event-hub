@@ -22,13 +22,15 @@ namespace signalr_event_hub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+                        services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
+                    builder
+                        
+                        .AllowAnyMethod().AllowCredentials()
+                        .AllowAnyHeader().WithOrigins("http://localhost:5051");
                 }));
+            services.AddMvc();
+
             services.AddSignalR();
             services.AddMetrics();
         }
@@ -41,14 +43,15 @@ namespace signalr_event_hub
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("MyPolicy");
             app.UseMvc();
 
             app.UseSignalR(routes =>
             {
                 routes.MapHub<EventHub>("/eventhub");
             });
-app.UseCors("MyPolicy");
+
         }
     }
 }
+

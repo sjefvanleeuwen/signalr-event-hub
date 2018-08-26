@@ -16,7 +16,7 @@ namespace signalr_test_client
 
         static async Task t(){
             connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000/eventhub")
+                .WithUrl("http://localhost:5050/eventhub")
                 .Build();
             connection.On<string, string>("publishmessage", (topic, message) =>
             {
