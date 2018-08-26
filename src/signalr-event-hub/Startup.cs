@@ -27,7 +27,7 @@ namespace signalr_event_hub
                     builder
                         
                         .AllowAnyMethod().AllowCredentials()
-                        .AllowAnyHeader().WithOrigins("http://localhost:5051");
+                        .AllowAnyHeader().WithOrigins("http://localhost:5050");
                 }));
             services.AddMvc();
 

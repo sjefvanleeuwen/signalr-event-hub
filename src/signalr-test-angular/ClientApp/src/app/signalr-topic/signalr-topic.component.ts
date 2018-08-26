@@ -12,7 +12,7 @@ export class SignalRTopicComponent implements OnInit {
   ngOnInit(): void {
     const divMessages = document.querySelector("#divMessages");
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5050/eventhub")
+      .withUrl("http://localhost:5051/eventhub")
       .build();
     this.hubConnection.start().catch(err => document.write(err));
     this.hubConnection.on("echo", (message: string) => {

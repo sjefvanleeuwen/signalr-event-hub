@@ -19,7 +19,7 @@ namespace signalr_test_angular
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:5051")
+                .UseUrls("http://localhost:5050")
                 .UseStartup<Startup>();
     }
 }
