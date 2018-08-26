@@ -13,6 +13,23 @@ The main goal of this setup is to update the User Interface when tasks categoriz
 
 The project is under construction. The nodes currently show simple event messaging and CORS is currently setup.
 
+## Run this sample
+
+Open three Terminals in VSCODE to run the three nodes.
+
+```
+~\signalr-event-hub\src\signalr-event-hubt>dotnet run
+~\signalr-event-hub\src\signalr-test-client>dotnet run
+~\signalr-event-hub\src\signalr-test-angular>dotnet run
+
+```
+
+Browse to http://localhost:5050 
+
+And choose the SignalR menu. You will see messages arriving from the client console.
+
+![signalr-setup](./doc/firefox.signalr.png)
+
 ## Built With
 
 * [VSCODE](https://code.visualstudio.com/) - The IDE used
