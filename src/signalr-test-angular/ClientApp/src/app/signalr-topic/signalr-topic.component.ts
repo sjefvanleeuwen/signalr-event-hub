@@ -20,7 +20,6 @@ export class SignalRTopicComponent implements OnInit {
       m.innerHTML =
           '<div class="message__author">' + message + '</div>';
       divMessages.appendChild(m);
-      //divMessages.scrollTop = divMessages.scrollHeight;
     });
   }
 }
