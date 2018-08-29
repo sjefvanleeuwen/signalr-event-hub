@@ -11,7 +11,7 @@ services:
   api:
     image: wigo4it/signalr-event-hub
     build:
-      context: ./signalr-event-hub
+      context: ./
       dockerfile: Dockerfile
     hostname: signalr-event-hub
     restart: always
