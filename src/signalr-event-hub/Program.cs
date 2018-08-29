@@ -22,7 +22,7 @@ namespace signalr_event_hub
             WebHost.CreateDefaultBuilder(args)
                 .UseMetrics()
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:5051")
+                .UseUrls("http://*:5051")
                 .Build();
     }
 }
