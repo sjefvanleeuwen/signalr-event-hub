@@ -1,0 +1,18 @@
+version: '3.4'
+
+x-logging:
+  &default-logging
+  options:
+    max-size: "10m"
+    max-file: "5"
+  driver: json-file
+
+services:
+  api:
+    image: wigo4it/signalr-event-hub
+    build:
+      context: ./signalr-event-hub
+      dockerfile: Dockerfile
+    hostname: signalr-event-hub
+    restart: always
+    logging: *default-logging
