@@ -8,13 +8,19 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 
 namespace signalr_event_hub
 {
     public class Program
     {
+        private  static  ConnectionMultiplexer Redis;
+        public static IDatabase Db;
+
         public static void Main(string[] args)
         {
+            Redis = ConnectionMultiplexer.Connect("localhost");
+            Db = Redis.GetDatabase();
             BuildWebHost(args).Run();
         }
 
