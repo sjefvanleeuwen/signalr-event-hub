@@ -25,14 +25,14 @@ namespace signalr_event_hub.Hubs
             Clients.All.SendAsync("echo",echo);
         }
 
-        public async Task PublishMessage(string topic, string message)
+        public async Task PublishMessage(string topic, string message, string processdata)
         {
             var data = string.Empty;
             if (message.StartsWith("redis_get!"));
                 data = Program.Db.StringGet(message);
-            await Clients.Group(topic).SendAsync("publishmessage",topic,message,data);
+            await Clients.Group(topic).SendAsync("publishmessage",topic,message,data, processdata);
             //await Clients.Caller.SendAsync("publishmessage",topic,message);
-            Console.WriteLine($"{topic}:{message}");
+            Console.WriteLine($"{topic}:{message}:{processdata}");
         }
     }
 }
