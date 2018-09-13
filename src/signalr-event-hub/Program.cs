@@ -9,12 +9,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
+using CamundaClient;
 
 namespace signalr_event_hub
 {
     public class Program
     {
         private  static  ConnectionMultiplexer Redis;
+        public static CamundaEngineClient camunda = new CamundaEngineClient();     
         public static IDatabase Db;
 
         public static void Main(string[] args)

@@ -1,5 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using CamundaClient.Dto;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
 
@@ -25,9 +29,21 @@ namespace signalr_event_hub.Hubs
             Clients.All.SendAsync("echo",echo);
         }
 
-        public async Task PublishMessage(string topic, string message, string processdata)
+        public async Task PublishMessage(string topic, string message, string data,string processdata)
         {
-            var data = string.Empty;
+            if (topic == "humanTask") {
+                ExternalTask t = Newtonsoft.Json.JsonConvert.DeserializeObject<ExternalTask>(processdata);
+                //Console.WriteLine("HUMANTASK" + "Task_0b1rq1j:" + t.ProcessInstanceId);
+                var q = new Dictionary<string,string>();
+                q.Add("id",t.ProcessInstanceId);
+                var task = Program.camunda.HumanTaskService.LoadTasks(q).First();
+                Console.WriteLine("HUMANTASK " + task.Id);
+                var values = new Dictionary<string,object>();
+                values.Add("isManual",true);
+                Program.camunda.HumanTaskService.Complete(task.Id,values);
+                return;
+            }
+            //var data = string.Empty;
             if (message.StartsWith("redis_get!"));
                 data = Program.Db.StringGet(message);
             await Clients.Group(topic).SendAsync("publishmessage",topic,message,data, processdata);
