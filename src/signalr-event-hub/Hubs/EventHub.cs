@@ -31,6 +31,12 @@ namespace signalr_event_hub.Hubs
 
         public async Task PublishMessage(string topic, string message, string data,string processdata)
         {
+            var dict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string,object>>(data);
+            if (topic.ToLower() == "startprocess") {
+                 Program.camunda.BpmnWorkflowService.StartProcessInstance(message, dict);
+                 return;
+            }
+
             if (topic == "humanTask") {
                 ExternalTask t = Newtonsoft.Json.JsonConvert.DeserializeObject<ExternalTask>(processdata);
                 //Console.WriteLine("HUMANTASK" + "Task_0b1rq1j:" + t.ProcessInstanceId);
@@ -44,7 +50,7 @@ namespace signalr_event_hub.Hubs
                 return;
             }
             //var data = string.Empty;
-            if (message.StartsWith("redis_get!"));
+            if (message.StartsWith("redis_get!"))
                 data = Program.Db.StringGet(message);
             await Clients.Group(topic).SendAsync("publishmessage",topic,message,data, processdata);
             //await Clients.Caller.SendAsync("publishmessage",topic,message);
