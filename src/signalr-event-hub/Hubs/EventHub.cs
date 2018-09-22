@@ -14,9 +14,13 @@ namespace signalr_event_hub.Hubs
         public async Task Subscribe(string topic)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, topic);
-            await Clients.Caller.SendAsync("subscribe",topic);
-            Console.WriteLine("subscribed..");
+            Console.WriteLine("subscribed.." + topic);
         }
+
+        public async Task Connected(){
+            Clients.All.SendAsync("connected",Context.ConnectionId);
+        }
+
         public void Unsubscribe(string topic)
         {
             Groups.RemoveFromGroupAsync(Context.ConnectionId, topic);
@@ -29,32 +33,37 @@ namespace signalr_event_hub.Hubs
             Clients.All.SendAsync("echo",echo);
         }
 
+        public async Task<List<ProcessDefinition>> GetProcessDefinitions()
+        {
+            return Program.camunda.RepositoryService.LoadProcessDefinitions(true);
+        }
+
+        public async Task<string> StartProcessInstance(string processDefinitionKey, string businessKey, string variables) {
+            Console.WriteLine("Start Process Instance");
+            Console.WriteLine("----------------------");
+            var dict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string,object>>(variables);
+            Console.WriteLine($"(ProcessDefinitionKey): {processDefinitionKey} (BusinessKey): {businessKey} (Variables): {variables}");
+            Console.WriteLine("----------------------");
+            return Program.camunda.BpmnWorkflowService.StartProcessInstance(processDefinitionKey,businessKey, dict);
+        }
+
+        public async Task CompleteTask(string taskId, string values) {
+            //ExternalTask t = Newtonsoft.Json.JsonConvert.DeserializeObject<ExternalTask>(processdata);
+            Console.WriteLine($"Complete Task: {taskId}");
+            var q = new Dictionary<string,string>();
+            q.Add("Id",taskId);
+            var task = Program.camunda.HumanTaskService.LoadTasks(q).First();
+            var v = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string,object>>(values);
+            Program.camunda.HumanTaskService.Complete(task.Id,v);
+            return;
+        }
+
         public async Task PublishMessage(string topic, string message, string data,string processdata)
         {
-            var dict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string,object>>(data);
-            if (topic.ToLower() == "startprocess") {
-                 Program.camunda.BpmnWorkflowService.StartProcessInstance(message, dict);
-                 return;
-            }
-
-            if (topic == "humanTask") {
-                ExternalTask t = Newtonsoft.Json.JsonConvert.DeserializeObject<ExternalTask>(processdata);
-                //Console.WriteLine("HUMANTASK" + "Task_0b1rq1j:" + t.ProcessInstanceId);
-                var q = new Dictionary<string,string>();
-                q.Add("id",t.ProcessInstanceId);
-                var task = Program.camunda.HumanTaskService.LoadTasks(q).First();
-                Console.WriteLine("HUMANTASK " + task.Id);
-                var values = new Dictionary<string,object>();
-                values.Add("isManual",true);
-                Program.camunda.HumanTaskService.Complete(task.Id,values);
-                return;
-            }
-            //var data = string.Empty;
-            if (message.StartsWith("redis_get!"))
-                data = Program.Db.StringGet(message);
             await Clients.Group(topic).SendAsync("publishmessage",topic,message,data, processdata);
-            //await Clients.Caller.SendAsync("publishmessage",topic,message);
-            Console.WriteLine($"{topic}:{message}:{processdata}");
+            Console.WriteLine($"(topic): {topic} (message):{message} (processData):{processdata}");
+            Console.WriteLine($"(data): {data}");
+
         }
     }
 }
