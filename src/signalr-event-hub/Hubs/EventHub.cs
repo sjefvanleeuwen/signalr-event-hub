@@ -11,6 +11,14 @@ namespace signalr_event_hub.Hubs
 {
     public class EventHub : Hub
     {
+        public async Task StringSet(string key, string value){
+            await Program.Db.StringSetAsync(key,value,new TimeSpan(6,0,0,0));
+        }
+
+         public async Task<string> StringGet(string key){
+            return Program.Db.StringGet(key);
+        }
+
         public async Task Subscribe(string topic)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, topic);
@@ -18,7 +26,7 @@ namespace signalr_event_hub.Hubs
         }
 
         public async Task Connected(){
-            Clients.All.SendAsync("connected",Context.ConnectionId);
+            await Clients.All.SendAsync("connected",Context.ConnectionId);
         }
 
         public void Unsubscribe(string topic)
