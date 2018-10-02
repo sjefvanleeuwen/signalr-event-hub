@@ -1,19 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using CamundaClient.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.IdentityModel.Tokens;
 
 namespace signalr_event_hub.Hubs
 {
+    [Authorize]
     public class EventHub : Hub
     {
+        [Authorize]
         public async Task StringSet(string key, string value){
             await Program.Db.StringSetAsync(key,value,new TimeSpan(6,0,0,0));
         }
+            [Authorize]
 
          public async Task<string> StringGet(string key){
             return Program.Db.StringGet(key);
@@ -35,9 +44,10 @@ namespace signalr_event_hub.Hubs
             System.Diagnostics.Trace.WriteLine("unsubscribed..");
         }
 
+        [Authorize]
         public void Echo(string echo)
         {
-            Console.WriteLine($"echo: {echo}");
+            Console.WriteLine($"{Context.User.Claims.ElementAt(1).Value}  echo: {echo}");
             Clients.All.SendAsync("echo",echo);
         }
 
@@ -47,6 +57,7 @@ namespace signalr_event_hub.Hubs
         }
 
         public async Task<string> StartProcessInstance(string processDefinitionKey, string businessKey, string variables) {
+            businessKey = new Random().Next().ToString();
             Console.WriteLine("Start Process Instance");
             Console.WriteLine("----------------------");
             var dict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string,object>>(variables);
@@ -71,7 +82,7 @@ namespace signalr_event_hub.Hubs
             await Clients.Group(topic).SendAsync("publishmessage",topic,message,data, processdata);
             Console.WriteLine($"(topic): {topic} (message):{message} (processData):{processdata}");
             Console.WriteLine($"(data): {data}");
-
         }
+
     }
 }
