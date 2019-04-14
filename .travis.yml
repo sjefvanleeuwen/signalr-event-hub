@@ -7,4 +7,4 @@ notifications:
 script:
   - dotnet build ./src/signalr-event-hub/
   - dotnet build ./src/signalr-test-client/
-  - dotnet build ./src/signalr-test-angular/
+  
