@@ -4,8 +4,6 @@ VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "signalr-event-hub", "signalr-event-hub\signalr-event-hub.csproj", "{1DCBEF9F-04A2-4AD9-9FFE-4F4EDC05F0AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "signalr-test-angular", "signalr-test-angular\signalr-test-angular.csproj", "{9D0656F5-3D90-4156-B941-88EC35F42E5A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "signalr-test-client", "signalr-test-client\signalr-test-client.csproj", "{9FF2DF09-95CB-4693-A28B-50CC6370824E}"
 EndProject
 Global
@@ -30,18 +28,6 @@ Global
 		{1DCBEF9F-04A2-4AD9-9FFE-4F4EDC05F0AE}.Release|x64.Build.0 = Release|Any CPU
 		{1DCBEF9F-04A2-4AD9-9FFE-4F4EDC05F0AE}.Release|x86.ActiveCfg = Release|Any CPU
 		{1DCBEF9F-04A2-4AD9-9FFE-4F4EDC05F0AE}.Release|x86.Build.0 = Release|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Debug|x64.Build.0 = Debug|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Debug|x86.Build.0 = Debug|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Release|x64.ActiveCfg = Release|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Release|x64.Build.0 = Release|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Release|x86.ActiveCfg = Release|Any CPU
-		{9D0656F5-3D90-4156-B941-88EC35F42E5A}.Release|x86.Build.0 = Release|Any CPU
 		{9FF2DF09-95CB-4693-A28B-50CC6370824E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FF2DF09-95CB-4693-A28B-50CC6370824E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FF2DF09-95CB-4693-A28B-50CC6370824E}.Debug|x64.ActiveCfg = Debug|Any CPU
